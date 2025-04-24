@@ -13,19 +13,13 @@ namespace leveldb {
 class AutoCompactTest : public testing::Test {
  public:
   AutoCompactTest() {
-    dbname_ = testing::TempDir() + "autocompact_test";
+    dbname_ = testing::TempDir() + "autocompact_test_add";
     tiny_cache_ = NewLRUCache(100);
     options_.block_cache = tiny_cache_;
     DestroyDB(dbname_, options_);
     options_.create_if_missing = true;
     options_.compression = kNoCompression;
     EXPECT_LEVELDB_OK(DB::Open(options_, dbname_, &db_));
-  }
-
-  ~AutoCompactTest() {
-    delete db_;
-    DestroyDB(dbname_, Options());
-    delete tiny_cache_;
   }
 
   std::string Key(int i) {
