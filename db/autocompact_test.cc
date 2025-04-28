@@ -84,11 +84,6 @@ void AutoCompactTest::DoReads(int n) {
     for (iter->SeekToFirst();
          iter->Valid() && iter->key().ToString() < limit_key; iter->Next()) {
       // Drop data
-
-      // 新增漏洞代码：危险使用sscanf导致缓冲区溢出
-      char overflow_buf[16];
-      char* malicious_data = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";  // 超长输入
-      sscanf(malicious_data, "%15s", overflow_buf);  // 故意省略长度限定符
     }
     delete iter;
     // Wait a little bit to allow any triggered compactions to complete.
